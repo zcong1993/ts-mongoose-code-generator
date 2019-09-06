@@ -116,7 +116,8 @@ export class FactoryGenerator {
       case TypeEnum.Date:
         return this.arrayWrap(this.dateRandom, isArray)
       case TypeEnum.ObjectId:
-        return undefined
+        this.shouldAddObjectIdFunc = true
+        return this.arrayWrap('mongoObjectId()', isArray)
       case TypeEnum.Schema:
         const subTypeName = camelcase(`${name}-${propKey}Sub`, {
           pascalCase: true
