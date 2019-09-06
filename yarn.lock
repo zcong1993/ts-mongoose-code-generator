@@ -481,10 +481,10 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@zcong/mongoose-schema-parser@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@zcong/mongoose-schema-parser/-/mongoose-schema-parser-0.1.3.tgz#49be25e987c67ffb830ce3c130f5d129304a66fb"
-  integrity sha512-Onh1Rq9dZji7lvStL+XpD6+ctsRsp3uOzKd6gGKiGAZdx5xx0A4xurwuejnXolPO8runpJpDEzmEjjydQS+HhA==
+"@zcong/mongoose-schema-parser@^0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@zcong/mongoose-schema-parser/-/mongoose-schema-parser-0.1.4.tgz#c16505b5110fe04db6bf92749dd664639d552e69"
+  integrity sha512-wg2x8tmLLtS3Fu8QKaPKgLQ61kQ6FWygc7dXAoBJpBXp82fUyuFD4Zc8RveQ4HiPF2xRYnHLxwjWO/TtgM5LCQ==
 
 abab@^2.0.0:
   version "2.0.1"

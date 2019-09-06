@@ -1,4 +1,4 @@
-import { Project, SourceFile } from 'ts-morph'
+import { Project, SourceFile, IndentationText, QuoteKind } from 'ts-morph'
 import {
   ParsedType,
   TypeEnum,
@@ -22,13 +22,20 @@ export class DtoGenerator {
       this.file = opts.file
     } else {
       // init
-      const project = new Project()
+      const project = new Project({
+        manipulationSettings: {
+          indentationText: IndentationText.TwoSpaces,
+          quoteKind: QuoteKind.Single
+        }
+      })
       this.file = project.createSourceFile(
         opts.filename || 'tmp.ts',
         {},
         { overwrite: true }
       )
     }
+
+    this.init()
   }
 
   generateDtoBySchema(schema: mongoose.Schema, name: string) {
@@ -107,5 +114,9 @@ export class DtoGenerator {
 
   getFile() {
     return this.file
+  }
+
+  private init() {
+    this.file.removeText()
   }
 }
