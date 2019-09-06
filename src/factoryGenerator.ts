@@ -26,6 +26,7 @@ export class FactoryGenerator {
   private dateRandom: string = 'faker.date.recent()'
 
   private shouldAddObjectIdFunc: boolean = false
+  private isSetted: boolean = false
 
   constructor(opts: FactoryGeneratorOptions) {
     if (opts.file) {
@@ -154,8 +155,9 @@ export class FactoryGenerator {
   }
 
   private afterGenerate() {
-    if (this.shouldAddObjectIdFunc) {
+    if (this.shouldAddObjectIdFunc && !this.isSetted) {
       this.addObjectIdFunc()
+      this.isSetted = true
     }
   }
 
