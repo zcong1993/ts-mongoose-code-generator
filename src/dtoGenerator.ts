@@ -37,7 +37,7 @@ export class DtoGenerator {
   }
 
   generateDtoByParsedSchema(parsed: ParsedType, name: string) {
-    let declar = this.useInterface
+    const declar = this.useInterface
       ? this.file.addInterface({
           name: camelcase(`${name}Dto`, { pascalCase: true }),
           isExported: true
@@ -61,25 +61,25 @@ export class DtoGenerator {
         case TypeEnum.String:
         case TypeEnum.Number:
           declar.addProperty({
+            hasQuestionToken,
             name: propKey,
             type: field.type.isArray
               ? `${field.type.type.toLocaleLowerCase()}[]`
-              : field.type.type.toLocaleLowerCase(),
-            hasQuestionToken
+              : field.type.type.toLocaleLowerCase()
           })
           break
         case TypeEnum.Date:
           declar.addProperty({
+            hasQuestionToken,
             name: propKey,
-            type: field.type.isArray ? 'Date[]' : 'Date',
-            hasQuestionToken
+            type: field.type.isArray ? 'Date[]' : 'Date'
           })
           break
         case TypeEnum.ObjectId:
           declar.addProperty({
+            hasQuestionToken,
             name: propKey,
-            type: field.type.isArray ? 'string[]' : 'string',
-            hasQuestionToken
+            type: field.type.isArray ? 'string[]' : 'string'
           })
           break
         case TypeEnum.Schema:
@@ -88,11 +88,11 @@ export class DtoGenerator {
           })
           this.generateDtoByParsedSchema(field.schema, subTypeName)
           declar.addProperty({
+            hasQuestionToken,
             name: propKey,
             type: field.type.isArray
               ? `${subTypeName}Dto[]`
-              : `${subTypeName}Dto`,
-            hasQuestionToken
+              : `${subTypeName}Dto`
           })
           break
         default:
