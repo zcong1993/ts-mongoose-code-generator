@@ -13,6 +13,12 @@ export interface FactoryGeneratorOptions {
   filename?: string
   useInterface?: boolean
   dtoFilePath: string
+  customFields?: {
+    [key: string]: {
+      rawVal: string
+      type: TypeEnum
+    }
+  }
 }
 
 export class FactoryGenerator {
@@ -107,6 +113,12 @@ export class FactoryGenerator {
     name: string
   ): string | undefined {
     const isArray = field.type.isArray
+    if (
+      this.opts.customFields.hasOwnProperty(propKey) &&
+      field.type.type === this.opts.customFields[propKey].type
+    ) {
+      return this.arrayWrap(this.opts.customFields[propKey].rawVal, isArray)
+    }
     switch (field.type.type) {
       case TypeEnum.Boolean:
         return this.arrayWrap(this.booleanRandom, isArray)
