@@ -161,7 +161,6 @@ it('factoryGenerator should work well', () => {
   })
   factoryGen.generateFactoriesBySchema(testSchema, 'Test')
   factoryGen.getFile().saveSync()
-  factoryGen.getFile().saveSync()
   const content = fs.readFileSync(`${__dirname}/factoryGen.ts`, 'utf8')
   const generated = factoryGen.getGeneratedCode()
   expect(content).toEqual(generated)
