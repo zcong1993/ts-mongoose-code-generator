@@ -63,7 +63,7 @@ const factoryGen = new FactoryGenerator({
   customFields: [
     {
       fieldName: 'name', // rewrite fieldname
-      types: [TypeEnum.String], // rewrite field types
+      type: TypeEnum.String, // rewrite field type
       value: 'customName' // rewrited by value
     }
   ]

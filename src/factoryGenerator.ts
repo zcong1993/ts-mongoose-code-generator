@@ -10,7 +10,7 @@ import * as mongoose from 'mongoose'
 import * as camelcase from 'camelcase'
 
 export interface CustomField {
-  types: TypeEnum[]
+  type: TypeEnum
   value: any
   fieldName: string
 }
@@ -122,7 +122,7 @@ export class FactoryGenerator {
     // custom default field name
     if (this.opts.customFields && this.opts.customFields.length > 0) {
       const cfs = this.opts.customFields.filter(
-        cf => cf.fieldName === propKey && cf.types.includes(field.type.type)
+        cf => cf.fieldName === propKey && cf.type === field.type.type
       )
 
       if (cfs.length > 0) {

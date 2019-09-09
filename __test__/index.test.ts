@@ -155,7 +155,7 @@ it('factoryGenerator should work well', () => {
       {
         value: 'customName',
         fieldName: 'name',
-        types: [TypeEnum.String]
+        type: TypeEnum.String
       }
     ]
   })

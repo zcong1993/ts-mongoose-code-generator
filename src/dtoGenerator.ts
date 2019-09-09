@@ -63,7 +63,8 @@ export class DtoGenerator {
         hasQuestionToken = !field.details.required
       }
 
-      // console.log(JSON.stringify(field), field.schema)
+      const isArray = field.type.isArray
+
       switch (field.type.type) {
         case TypeEnum.Boolean:
         case TypeEnum.String:
@@ -71,23 +72,21 @@ export class DtoGenerator {
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: field.type.isArray
-              ? `${field.type.type.toLocaleLowerCase()}[]`
-              : field.type.type.toLocaleLowerCase()
+            type: this.arrayWrap(field.type.type.toLocaleLowerCase(), isArray)
           })
           break
         case TypeEnum.Date:
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: field.type.isArray ? 'Date[]' : 'Date'
+            type: this.arrayWrap('Date', isArray)
           })
           break
         case TypeEnum.ObjectId:
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: field.type.isArray ? 'string[]' : 'string'
+            type: this.arrayWrap('string', isArray)
           })
           break
         case TypeEnum.Schema:
@@ -98,9 +97,7 @@ export class DtoGenerator {
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: field.type.isArray
-              ? `${subTypeName}Dto[]`
-              : `${subTypeName}Dto`
+            type: this.arrayWrap(`${subTypeName}Dto`, isArray)
           })
           break
         default:
@@ -119,5 +116,9 @@ export class DtoGenerator {
 
   private init() {
     this.file.removeText()
+  }
+
+  private arrayWrap(origin: string, isArray: boolean): string {
+    return isArray ? `${origin}[]` : origin
   }
 }
