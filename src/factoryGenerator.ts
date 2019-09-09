@@ -83,7 +83,7 @@ export class FactoryGenerator {
         {
           name: 'initial',
           type: `Partial<dto.${dtoName}>`,
-          hasQuestionToken: true
+          initializer: '{}'
         }
       ],
       returnType: `dto.${dtoName}`,
