@@ -33,6 +33,7 @@ const dtoGen = new DtoGenerator({ filename: `${__dirname}/dtoGen.ts`, useInterfa
 dtoGen.generateDtoBySchema(testSchema, 'Test')
 dtoGen.getFile().saveSync() // save generated code as file
 dtoGen.getGeneratedCode() // get generated code content
+
 // export interface TestDto {
 //   name?: string;
 //   age?: number;
@@ -67,17 +68,21 @@ const factoryGen = new FactoryGenerator({
     }
   ]
 })
-import * as faker from 'faker';
-import * as dto from './dtoGen';
+dtoGen.generateDtoBySchema(testSchema, 'Test')
+dtoGen.getFile().saveSync() // save generated code as file
+dtoGen.getGeneratedCode() // get generated code content
 
-export function testFactory(initial: Partial<dto.TestDto> = {}): dto.TestDto {
-  const mock: dto.TestDto = {
-    name: 'customName',
-    age: faker.random.number(),
-    requiredName: faker.lorem.word(),
-  }
-  return { ...mock, ...initial }
-}
+// import * as faker from 'faker';
+// import * as dto from './dtoGen';
+
+// export function testFactory(initial: Partial<dto.TestDto> = {}): dto.TestDto {
+//   const mock: dto.TestDto = {
+//     name: 'customName',
+//     age: faker.random.number(),
+//     requiredName: faker.lorem.word(),
+//   }
+//   return { ...mock, ...initial }
+// }
 ```
 
 ## License
