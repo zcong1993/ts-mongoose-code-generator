@@ -63,6 +63,7 @@ export class DtoGenerator {
         hasQuestionToken = !field.details.required
       }
 
+      // console.log(JSON.stringify(field), field.schema)
       switch (field.type.type) {
         case TypeEnum.Boolean:
         case TypeEnum.String:
