@@ -1,0 +1,203 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dtoGenerator should work well 1`] = `
+"export class TestDto {
+  id?: string;
+  name?: string;
+  age?: number;
+  requiredName: string;
+  enumString?: string;
+  date?: Date;
+  bool?: boolean;
+  nested?: TestNestedSubDto;
+  nestedArr?: TestNestedArrSubDto[];
+  nestedArr2?: TestNestedArr2SubDto[];
+  simpleArr?: string[];
+  simpleArr2?: string[];
+  directNested?: TestDirectNestedSubDto;
+  directNestedArr?: TestDirectNestedArrSubDto[];
+  ref?: string;
+  refs?: string[];
+  withTypeField?: TestWithTypeFieldSubDto[];
+}
+
+export class TestNestedSubDto {
+  nestedName?: string;
+}
+
+export class TestNestedArrSubDto {
+  nestedName?: string;
+}
+
+export class TestNestedArr2SubDto {
+  type?: TestNestedArr2SubTypeSubDto;
+}
+
+export class TestNestedArr2SubTypeSubDto {
+  nestedName?: string;
+}
+
+export class TestDirectNestedSubDto {
+  name?: string;
+  age?: number;
+}
+
+export class TestDirectNestedArrSubDto {
+  name?: string;
+  age?: number;
+}
+
+export class TestWithTypeFieldSubDto {
+  type?: string;
+  other?: string;
+}
+"
+`;
+
+exports[`dtoGenerator use interface should work well 1`] = `
+"export interface TestDto {
+  id?: string;
+  name?: string;
+  age?: number;
+  requiredName: string;
+  enumString?: string;
+  date?: Date;
+  bool?: boolean;
+  nested?: TestNestedSubDto;
+  nestedArr?: TestNestedArrSubDto[];
+  nestedArr2?: TestNestedArr2SubDto[];
+  simpleArr?: string[];
+  simpleArr2?: string[];
+  directNested?: TestDirectNestedSubDto;
+  directNestedArr?: TestDirectNestedArrSubDto[];
+  ref?: string;
+  refs?: string[];
+  withTypeField?: TestWithTypeFieldSubDto[];
+}
+
+export interface TestNestedSubDto {
+  nestedName?: string;
+}
+
+export interface TestNestedArrSubDto {
+  nestedName?: string;
+}
+
+export interface TestNestedArr2SubDto {
+  type?: TestNestedArr2SubTypeSubDto;
+}
+
+export interface TestNestedArr2SubTypeSubDto {
+  nestedName?: string;
+}
+
+export interface TestDirectNestedSubDto {
+  name?: string;
+  age?: number;
+}
+
+export interface TestDirectNestedArrSubDto {
+  name?: string;
+  age?: number;
+}
+
+export interface TestWithTypeFieldSubDto {
+  type?: string;
+  other?: string;
+}
+"
+`;
+
+exports[`factoryGenerator should work well 1`] = `
+"import * as faker from 'faker';
+import * as dto from './dtoGen';
+
+export function testFactory(initial: Partial<dto.TestDto> = {}): dto.TestDto {
+  const mock: dto.TestDto = {
+    id: mongoObjectId(),
+    name: 'customName',
+    age: faker.random.number(),
+    requiredName: faker.lorem.word(),
+    enumString: enumPick([ 'test1', 'test2' ])(),
+    date: faker.date.recent(),
+    bool: faker.random.boolean(),
+    nested: testNestedSubFactory(),
+    nestedArr: [testNestedArrSubFactory()],
+    nestedArr2: [testNestedArr2SubFactory()],
+    simpleArr: [faker.lorem.word()],
+    simpleArr2: [faker.lorem.word()],
+    directNested: testDirectNestedSubFactory(),
+    directNestedArr: [testDirectNestedArrSubFactory()],
+    ref: mongoObjectId(),
+    refs: [mongoObjectId()],
+    withTypeField: [testWithTypeFieldSubFactory()],
+  }
+  return { ...mock, ...initial }
+}
+
+function testNestedSubFactory(initial: Partial<dto.TestNestedSubDto> = {}): dto.TestNestedSubDto {
+  const mock: dto.TestNestedSubDto = {
+    nestedName: faker.lorem.word(),
+  }
+  return { ...mock, ...initial }
+}
+
+function testNestedArrSubFactory(initial: Partial<dto.TestNestedArrSubDto> = {}): dto.TestNestedArrSubDto {
+  const mock: dto.TestNestedArrSubDto = {
+    nestedName: faker.lorem.word(),
+  }
+  return { ...mock, ...initial }
+}
+
+function testNestedArr2SubFactory(initial: Partial<dto.TestNestedArr2SubDto> = {}): dto.TestNestedArr2SubDto {
+  const mock: dto.TestNestedArr2SubDto = {
+    type: testNestedArr2SubTypeSubFactory(),
+  }
+  return { ...mock, ...initial }
+}
+
+function testNestedArr2SubTypeSubFactory(initial: Partial<dto.TestNestedArr2SubTypeSubDto> = {}): dto.TestNestedArr2SubTypeSubDto {
+  const mock: dto.TestNestedArr2SubTypeSubDto = {
+    nestedName: faker.lorem.word(),
+  }
+  return { ...mock, ...initial }
+}
+
+function testDirectNestedSubFactory(initial: Partial<dto.TestDirectNestedSubDto> = {}): dto.TestDirectNestedSubDto {
+  const mock: dto.TestDirectNestedSubDto = {
+    name: 'customName',
+    age: faker.random.number(),
+  }
+  return { ...mock, ...initial }
+}
+
+function testDirectNestedArrSubFactory(initial: Partial<dto.TestDirectNestedArrSubDto> = {}): dto.TestDirectNestedArrSubDto {
+  const mock: dto.TestDirectNestedArrSubDto = {
+    name: 'customName',
+    age: faker.random.number(),
+  }
+  return { ...mock, ...initial }
+}
+
+function testWithTypeFieldSubFactory(initial: Partial<dto.TestWithTypeFieldSubDto> = {}): dto.TestWithTypeFieldSubDto {
+  const mock: dto.TestWithTypeFieldSubDto = {
+    type: faker.lorem.word(),
+    other: faker.lorem.word(),
+  }
+  return { ...mock, ...initial }
+}
+
+function mongoObjectId(): string {
+  const timestamp = (new Date().getTime() / 1000 | 0).toString(16)
+  return timestamp + 'xxxxxxxxxxxxxxxx'.replace(/[x]/g, () => (Math.random() * 16 | 0).toString(16)).toLowerCase()
+}
+
+function enumPick<T = any>(arr: T[]): () => T {
+  function randomPick(): T {
+    const randomI = Math.floor((Math.random() * arr.length))
+    return arr[randomI]
+  }
+  return randomPick
+}
+"
+`;

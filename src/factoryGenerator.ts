@@ -9,17 +9,17 @@ import { Project, SourceFile, IndentationText, QuoteKind } from 'ts-morph'
 import * as mongoose from 'mongoose'
 import * as camelcase from 'camelcase'
 
+export interface CustomField {
+  types: TypeEnum[]
+  value: any
+  fieldName: string
+}
+
 export interface FactoryGeneratorOptions {
   file?: SourceFile
   filename?: string
-  useInterface?: boolean
   dtoFilePath: string
-  customFields?: {
-    [key: string]: {
-      rawVal: any
-      type: TypeEnum
-    }
-  }
+  customFields?: CustomField[]
 }
 
 export enum helperFlags {
@@ -119,51 +119,58 @@ export class FactoryGenerator {
     name: string
   ): string | undefined {
     const isArray = field.type.isArray
-    if (
-      this.opts.customFields.hasOwnProperty(propKey) &&
-      field.type.type === this.opts.customFields[propKey].type
-    ) {
+    // custom default field name
+    if (this.opts.customFields && this.opts.customFields.length > 0) {
+      const cfs = this.opts.customFields.filter(
+        cf => cf.fieldName === propKey && cf.types.includes(field.type.type)
+      )
+
+      if (cfs.length > 0) {
+        return this.arrayWrap(inspect(cfs[0].value), isArray)
+      }
+    }
+
+    if (field.details && field.details.enum) {
+      this.shouldAddFuncSet.add(helperFlags.shouldAddEnumPickFunc)
       return this.arrayWrap(
-        inspect(this.opts.customFields[propKey].rawVal),
+        `enumPick(${inspect(field.details.enum)})()`,
         isArray
       )
     }
+
+    let factoryFunc: string
+
     switch (field.type.type) {
       case TypeEnum.Boolean:
-        return this.arrayWrap(this.booleanRandom, isArray)
+        factoryFunc = this.booleanRandom
+        break
       case TypeEnum.String: {
-        let factoryFunc: string = this.stringRandom
-        if (field.details && field.details.enum) {
-          this.shouldAddFuncSet.add(helperFlags.shouldAddEnumPickFunc)
-          factoryFunc = `enumPick(${inspect(field.details.enum)})()`
-        }
-        return this.arrayWrap(factoryFunc, isArray)
+        factoryFunc = this.stringRandom
+        break
       }
       case TypeEnum.Number: {
-        let factoryFunc: string = this.numberRandom
-        if (field.details && field.details.enum) {
-          this.shouldAddFuncSet.add(helperFlags.shouldAddEnumPickFunc)
-          factoryFunc = `enumPick(${inspect(field.details.enum)})()`
-        }
-        return this.arrayWrap(factoryFunc, isArray)
+        factoryFunc = this.numberRandom
+        break
       }
       case TypeEnum.Date:
-        return this.arrayWrap(this.dateRandom, isArray)
+        factoryFunc = this.dateRandom
+        break
       case TypeEnum.ObjectId:
         this.shouldAddFuncSet.add(helperFlags.shouldAddObjectIdFunc)
-        return this.arrayWrap('mongoObjectId()', isArray)
+        factoryFunc = 'mongoObjectId()'
+        break
       case TypeEnum.Schema:
         const subTypeName = camelcase(`${name}-${propKey}Sub`, {
           pascalCase: true
         })
         this.generateFactoriesByParsedSchema(field.schema, subTypeName, true)
-        return this.arrayWrap(
-          `${camelcase(`${subTypeName}-Factory`)}()`,
-          isArray
-        )
+        factoryFunc = `${camelcase(`${subTypeName}-Factory`)}()`
+        break
       default:
         return undefined
     }
+
+    return this.arrayWrap(factoryFunc, isArray)
   }
 
   private arrayWrap(origin: string, isArray: boolean) {
@@ -206,14 +213,10 @@ export class FactoryGenerator {
 
     func.setBodyText(writer => {
       writer
-        .writeLine('function randomPick(): T')
-        .block(() => {
-          writer
-            .writeLine(
-              'const randomI = Math.floor((Math.random() * arr.length))'
-            )
-            .writeLine('return arr[randomI]')
-        })
+        .writeLine('function randomPick(): T {')
+        .writeLine('  const randomI = Math.floor((Math.random() * arr.length))')
+        .writeLine('  return arr[randomI]')
+        .writeLine('}')
         .writeLine('return randomPick')
     })
   }
