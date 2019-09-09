@@ -1,3 +1,4 @@
+import { inspect } from 'util'
 import {
   parseSchema,
   ParsedType,
@@ -15,14 +16,15 @@ export interface FactoryGeneratorOptions {
   dtoFilePath: string
   customFields?: {
     [key: string]: {
-      rawVal: string
+      rawVal: any
       type: TypeEnum
     }
   }
 }
 
 export enum helperFlags {
-  shouldAddObjectIdFunc
+  shouldAddObjectIdFunc,
+  shouldAddEnumPickFunc
 }
 
 export class FactoryGenerator {
@@ -121,15 +123,30 @@ export class FactoryGenerator {
       this.opts.customFields.hasOwnProperty(propKey) &&
       field.type.type === this.opts.customFields[propKey].type
     ) {
-      return this.arrayWrap(this.opts.customFields[propKey].rawVal, isArray)
+      return this.arrayWrap(
+        inspect(this.opts.customFields[propKey].rawVal),
+        isArray
+      )
     }
     switch (field.type.type) {
       case TypeEnum.Boolean:
         return this.arrayWrap(this.booleanRandom, isArray)
-      case TypeEnum.String:
-        return this.arrayWrap(this.stringRandom, isArray)
-      case TypeEnum.Number:
-        return this.arrayWrap(this.numberRandom, isArray)
+      case TypeEnum.String: {
+        let factoryFunc: string = this.stringRandom
+        if (field.details && field.details.enum) {
+          this.shouldAddFuncSet.add(helperFlags.shouldAddEnumPickFunc)
+          factoryFunc = `enumPick(${inspect(field.details.enum)})()`
+        }
+        return this.arrayWrap(factoryFunc, isArray)
+      }
+      case TypeEnum.Number: {
+        let factoryFunc: string = this.numberRandom
+        if (field.details && field.details.enum) {
+          this.shouldAddFuncSet.add(helperFlags.shouldAddEnumPickFunc)
+          factoryFunc = `enumPick(${inspect(field.details.enum)})()`
+        }
+        return this.arrayWrap(factoryFunc, isArray)
+      }
       case TypeEnum.Date:
         return this.arrayWrap(this.dateRandom, isArray)
       case TypeEnum.ObjectId:
@@ -170,6 +187,37 @@ export class FactoryGenerator {
     })
   }
 
+  private addEnumPickFunc() {
+    const func = this.file.addFunction({
+      name: 'enumPick'
+    })
+
+    func.addTypeParameter({
+      name: 'T',
+      default: 'any'
+    })
+
+    func.addParameter({
+      name: 'arr',
+      type: 'T[]'
+    })
+
+    func.setReturnType('() => T')
+
+    func.setBodyText(writer => {
+      writer
+        .writeLine('function randomPick(): T')
+        .block(() => {
+          writer
+            .writeLine(
+              'const randomI = Math.floor((Math.random() * arr.length))'
+            )
+            .writeLine('return arr[randomI]')
+        })
+        .writeLine('return randomPick')
+    })
+  }
+
   private afterGenerate() {
     if (
       this.shouldAddFuncSet.has(helperFlags.shouldAddObjectIdFunc) &&
@@ -177,6 +225,14 @@ export class FactoryGenerator {
     ) {
       this.addObjectIdFunc()
       this.isSettedFuncSet.add(helperFlags.shouldAddObjectIdFunc)
+    }
+
+    if (
+      this.shouldAddFuncSet.has(helperFlags.shouldAddEnumPickFunc) &&
+      !this.isSettedFuncSet.has(helperFlags.shouldAddEnumPickFunc)
+    ) {
+      this.addEnumPickFunc()
+      this.isSettedFuncSet.add(helperFlags.shouldAddEnumPickFunc)
     }
   }
 
