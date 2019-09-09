@@ -21,6 +21,10 @@ export interface FactoryGeneratorOptions {
   }
 }
 
+export enum helperFlags {
+  shouldAddObjectIdFunc
+}
+
 export class FactoryGenerator {
   private file: SourceFile
   private opts: Readonly<FactoryGeneratorOptions>
@@ -31,8 +35,8 @@ export class FactoryGenerator {
   private booleanRandom: string = 'faker.random.boolean()'
   private dateRandom: string = 'faker.date.recent()'
 
-  private shouldAddObjectIdFunc: boolean = false
-  private isSetted: boolean = false
+  private shouldAddFuncSet: Set<helperFlags> = new Set()
+  private isSettedFuncSet: Set<helperFlags> = new Set()
 
   constructor(opts: FactoryGeneratorOptions) {
     if (opts.file) {
@@ -129,7 +133,7 @@ export class FactoryGenerator {
       case TypeEnum.Date:
         return this.arrayWrap(this.dateRandom, isArray)
       case TypeEnum.ObjectId:
-        this.shouldAddObjectIdFunc = true
+        this.shouldAddFuncSet.add(helperFlags.shouldAddObjectIdFunc)
         return this.arrayWrap('mongoObjectId()', isArray)
       case TypeEnum.Schema:
         const subTypeName = camelcase(`${name}-${propKey}Sub`, {
@@ -167,9 +171,12 @@ export class FactoryGenerator {
   }
 
   private afterGenerate() {
-    if (this.shouldAddObjectIdFunc && !this.isSetted) {
+    if (
+      this.shouldAddFuncSet.has(helperFlags.shouldAddObjectIdFunc) &&
+      !this.isSettedFuncSet.has(helperFlags.shouldAddObjectIdFunc)
+    ) {
       this.addObjectIdFunc()
-      this.isSetted = true
+      this.isSettedFuncSet.add(helperFlags.shouldAddObjectIdFunc)
     }
   }
 
