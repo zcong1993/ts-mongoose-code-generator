@@ -1,6 +1,6 @@
 {
   "name": "@zcong/ts-mongoose-code-generator",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "generate ts dto and model factory code for mongoose",
   "main": "./dist/index.js",
   "files": [
