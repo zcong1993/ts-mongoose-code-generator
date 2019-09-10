@@ -69,11 +69,7 @@ export class FactoryGenerator {
     this.afterGenerate()
   }
 
-  generateFactoriesByParsedSchema(
-    parsed: ParsedType,
-    name: string,
-    isSubSchema: boolean = false
-  ) {
+  generateFactoriesByParsedSchema(parsed: ParsedType, name: string) {
     const dtoName = camelcase(`${name}Dto`, { pascalCase: true })
 
     const funcName = camelcase(`${name}-Factory`)
@@ -87,7 +83,7 @@ export class FactoryGenerator {
         }
       ],
       returnType: `dto.${dtoName}`,
-      isExported: !isSubSchema
+      isExported: true
     })
 
     func.setBodyText(writer => {
@@ -163,7 +159,7 @@ export class FactoryGenerator {
         const subTypeName = camelcase(`${name}-${propKey}Sub`, {
           pascalCase: true
         })
-        this.generateFactoriesByParsedSchema(field.schema, subTypeName, true)
+        this.generateFactoriesByParsedSchema(field.schema, subTypeName)
         factoryFunc = `${camelcase(`${subTypeName}-Factory`)}()`
         break
       default:

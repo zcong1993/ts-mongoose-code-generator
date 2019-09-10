@@ -135,35 +135,35 @@ export function testFactory(initial: Partial<dto.TestDto> = {}): dto.TestDto {
   return { ...mock, ...initial }
 }
 
-function testNestedSubFactory(initial: Partial<dto.TestNestedSubDto> = {}): dto.TestNestedSubDto {
+export function testNestedSubFactory(initial: Partial<dto.TestNestedSubDto> = {}): dto.TestNestedSubDto {
   const mock: dto.TestNestedSubDto = {
     nestedName: faker.lorem.word(),
   }
   return { ...mock, ...initial }
 }
 
-function testNestedArrSubFactory(initial: Partial<dto.TestNestedArrSubDto> = {}): dto.TestNestedArrSubDto {
+export function testNestedArrSubFactory(initial: Partial<dto.TestNestedArrSubDto> = {}): dto.TestNestedArrSubDto {
   const mock: dto.TestNestedArrSubDto = {
     nestedName: faker.lorem.word(),
   }
   return { ...mock, ...initial }
 }
 
-function testNestedArr2SubFactory(initial: Partial<dto.TestNestedArr2SubDto> = {}): dto.TestNestedArr2SubDto {
+export function testNestedArr2SubFactory(initial: Partial<dto.TestNestedArr2SubDto> = {}): dto.TestNestedArr2SubDto {
   const mock: dto.TestNestedArr2SubDto = {
     type: testNestedArr2SubTypeSubFactory(),
   }
   return { ...mock, ...initial }
 }
 
-function testNestedArr2SubTypeSubFactory(initial: Partial<dto.TestNestedArr2SubTypeSubDto> = {}): dto.TestNestedArr2SubTypeSubDto {
+export function testNestedArr2SubTypeSubFactory(initial: Partial<dto.TestNestedArr2SubTypeSubDto> = {}): dto.TestNestedArr2SubTypeSubDto {
   const mock: dto.TestNestedArr2SubTypeSubDto = {
     nestedName: faker.lorem.word(),
   }
   return { ...mock, ...initial }
 }
 
-function testDirectNestedSubFactory(initial: Partial<dto.TestDirectNestedSubDto> = {}): dto.TestDirectNestedSubDto {
+export function testDirectNestedSubFactory(initial: Partial<dto.TestDirectNestedSubDto> = {}): dto.TestDirectNestedSubDto {
   const mock: dto.TestDirectNestedSubDto = {
     name: 'customName',
     age: faker.random.number(),
@@ -171,7 +171,7 @@ function testDirectNestedSubFactory(initial: Partial<dto.TestDirectNestedSubDto>
   return { ...mock, ...initial }
 }
 
-function testDirectNestedArrSubFactory(initial: Partial<dto.TestDirectNestedArrSubDto> = {}): dto.TestDirectNestedArrSubDto {
+export function testDirectNestedArrSubFactory(initial: Partial<dto.TestDirectNestedArrSubDto> = {}): dto.TestDirectNestedArrSubDto {
   const mock: dto.TestDirectNestedArrSubDto = {
     name: 'customName',
     age: faker.random.number(),
@@ -179,7 +179,7 @@ function testDirectNestedArrSubFactory(initial: Partial<dto.TestDirectNestedArrS
   return { ...mock, ...initial }
 }
 
-function testWithTypeFieldSubFactory(initial: Partial<dto.TestWithTypeFieldSubDto> = {}): dto.TestWithTypeFieldSubDto {
+export function testWithTypeFieldSubFactory(initial: Partial<dto.TestWithTypeFieldSubDto> = {}): dto.TestWithTypeFieldSubDto {
   const mock: dto.TestWithTypeFieldSubDto = {
     type: faker.lorem.word(),
     other: faker.lorem.word(),
