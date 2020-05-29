@@ -104,7 +104,7 @@ export class DtoGenerator {
           // handle ref type
           if (field.details && field.details.ref) {
             type = this.arrayWrapOr(
-              ['string', 'Types.ObjectId', `${field.details.ref}Dto)`],
+              ['string', 'Types.ObjectId', `${field.details.ref}Dto`],
               isArray
             )
           } else {

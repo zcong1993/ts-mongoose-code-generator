@@ -18,10 +18,9 @@ export class TestDto {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: Array<TestDirectNestedArrSubDto>;
-  ref?: string | Types.ObjectId | RefDto
+  ref?: string | Types.ObjectId | RefDto;
   refs?: Array<string> | Array<Types.ObjectId>;
   withTypeField?: Array<TestWithTypeFieldSubDto>;
-);
 }
 
 export class TestNestedSubDto {
@@ -86,10 +85,9 @@ export interface TestDto {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: Array<TestDirectNestedArrSubDto>;
-  ref?: string | Types.ObjectId | RefDto
+  ref?: string | Types.ObjectId | RefDto;
   refs?: Array<string> | Array<Types.ObjectId>;
   withTypeField?: Array<TestWithTypeFieldSubDto>;
-);
 }
 
 export interface TestNestedSubDto {
