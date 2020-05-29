@@ -104,11 +104,11 @@ export class DtoGenerator {
           // handle ref type
           if (field.details && field.details.ref) {
             type = this.arrayWrap(
-              `string | Types.ObjectId | ${field.details.ref}Dto`,
+              `(string | Types.ObjectId | ${field.details.ref}Dto)`,
               isArray
             )
           } else {
-            type = this.arrayWrap('string | Types.ObjectId', isArray)
+            type = this.arrayWrap('(string | Types.ObjectId)', isArray)
           }
           declar.addProperty({
             type,
@@ -146,7 +146,7 @@ export class DtoGenerator {
   }
 
   private arrayWrap(origin: string, isArray: boolean): string {
-    return isArray ? `${origin}[]` : origin
+    return isArray ? `${origin}[]` : origin.replace(/[\(\)]/g, '')
   }
 
   private importObjectId() {
