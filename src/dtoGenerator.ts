@@ -16,6 +16,7 @@ export interface DtoGeneratorInitOptions {
 export class DtoGenerator {
   private file: SourceFile
   private useInterface: boolean
+  private importedObjectId: boolean = false
   constructor(opts: DtoGeneratorInitOptions) {
     this.useInterface = opts.useInterface
     if (opts.file) {
@@ -43,7 +44,11 @@ export class DtoGenerator {
     this.generateDtoByParsedSchema(parsed, name)
   }
 
-  generateDtoByParsedSchema(parsed: ParsedType, name: string) {
+  generateDtoByParsedSchema(
+    parsed: ParsedType,
+    name: string,
+    isSub: boolean = false
+  ) {
     const declar = this.useInterface
       ? this.file.addInterface({
           name: camelcase(`${name}Dto`, { pascalCase: true }),
@@ -53,6 +58,27 @@ export class DtoGenerator {
           name: camelcase(`${name}Dto`, { pascalCase: true }),
           isExported: true,
         })
+
+    if (isSub) {
+      declar.addProperty({
+        hasQuestionToken: true,
+        name: '_id',
+        type: 'string | ObjectId',
+      })
+
+      if (!this.importedObjectId) {
+        this.file.addImportDeclaration({
+          moduleSpecifier: 'mongoose',
+          namedImports: [
+            {
+              name: 'ObjectId',
+            },
+          ],
+        })
+        this.importedObjectId = true
+      }
+    }
+
     Object.keys(parsed).forEach((propKey) => {
       const field = parsed[propKey]
 
@@ -93,7 +119,7 @@ export class DtoGenerator {
           const subTypeName = camelcase(`${name}-${propKey}Sub`, {
             pascalCase: true,
           })
-          this.generateDtoByParsedSchema(field.schema, subTypeName)
+          this.generateDtoByParsedSchema(field.schema, subTypeName, true)
           declar.addProperty({
             hasQuestionToken,
             name: propKey,

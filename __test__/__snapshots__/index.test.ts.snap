@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`dtoGenerator should work well 1`] = `
-"export class TestDto {
+"import { ObjectId } from 'mongoose';
+
+export class TestDto {
   id?: string;
   name?: string;
   age?: number;
@@ -22,32 +24,39 @@ exports[`dtoGenerator should work well 1`] = `
 }
 
 export class TestNestedSubDto {
+  _id?: string | ObjectId;
   nestedName?: string;
 }
 
 export class TestNestedArrSubDto {
+  _id?: string | ObjectId;
   nestedName?: string;
 }
 
 export class TestNestedArr2SubDto {
+  _id?: string | ObjectId;
   type?: TestNestedArr2SubTypeSubDto;
 }
 
 export class TestNestedArr2SubTypeSubDto {
+  _id?: string | ObjectId;
   nestedName?: string;
 }
 
 export class TestDirectNestedSubDto {
+  _id?: string | ObjectId;
   name?: string;
   age?: number;
 }
 
 export class TestDirectNestedArrSubDto {
+  _id?: string | ObjectId;
   name?: string;
   age?: number;
 }
 
 export class TestWithTypeFieldSubDto {
+  _id?: string | ObjectId;
   type?: string;
   other?: string;
 }
@@ -55,7 +64,9 @@ export class TestWithTypeFieldSubDto {
 `;
 
 exports[`dtoGenerator use interface should work well 1`] = `
-"export interface TestDto {
+"import { ObjectId } from 'mongoose';
+
+export interface TestDto {
   id?: string;
   name?: string;
   age?: number;
@@ -76,32 +87,39 @@ exports[`dtoGenerator use interface should work well 1`] = `
 }
 
 export interface TestNestedSubDto {
+  _id?: string | ObjectId;
   nestedName?: string;
 }
 
 export interface TestNestedArrSubDto {
+  _id?: string | ObjectId;
   nestedName?: string;
 }
 
 export interface TestNestedArr2SubDto {
+  _id?: string | ObjectId;
   type?: TestNestedArr2SubTypeSubDto;
 }
 
 export interface TestNestedArr2SubTypeSubDto {
+  _id?: string | ObjectId;
   nestedName?: string;
 }
 
 export interface TestDirectNestedSubDto {
+  _id?: string | ObjectId;
   name?: string;
   age?: number;
 }
 
 export interface TestDirectNestedArrSubDto {
+  _id?: string | ObjectId;
   name?: string;
   age?: number;
 }
 
 export interface TestWithTypeFieldSubDto {
+  _id?: string | ObjectId;
   type?: string;
   other?: string;
 }
