@@ -21,19 +21,19 @@
   "author": "zcong1993",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^24.0.5",
-    "@types/mongoose": "^5.5.17",
-    "@types/node": "^11.9.4",
-    "husky": "^3.0.0",
-    "jest": "^24.1.0",
-    "lint-staged": "^9.0.0",
-    "mongoose": "^5.6.13",
-    "prettier": "^1.16.4",
-    "ts-jest": "^24.0.0",
-    "tslint": "^5.12.1",
-    "tslint-config-airbnb": "^5.11.1",
+    "@types/jest": "^25.2.3",
+    "@types/mongoose": "^5.7.21",
+    "@types/node": "^14.0.5",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.7",
+    "mongoose": "^5.9.16",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.0.0",
+    "tslint": "^6.1.2",
+    "tslint-config-airbnb": "^5.11.2",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.3.1"
+    "typescript": "^3.9.3"
   },
   "jest": {
     "testEnvironment": "node",
@@ -62,8 +62,8 @@
     }
   },
   "dependencies": {
-    "@zcong/mongoose-schema-parser": "^0.1.6",
-    "camelcase": "^5.3.1",
-    "ts-morph": "^4.0.0"
+    "@zcong/mongoose-schema-parser": "^0.1.8",
+    "camelcase": "^6.0.0",
+    "ts-morph": "^7.1.0"
   }
 }

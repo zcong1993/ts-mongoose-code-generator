@@ -2,7 +2,7 @@ import { Project, SourceFile, IndentationText, QuoteKind } from 'ts-morph'
 import {
   ParsedType,
   TypeEnum,
-  parseSchema
+  parseSchema,
 } from '@zcong/mongoose-schema-parser'
 import * as mongoose from 'mongoose'
 import * as camelcase from 'camelcase'
@@ -25,8 +25,8 @@ export class DtoGenerator {
       const project = new Project({
         manipulationSettings: {
           indentationText: IndentationText.TwoSpaces,
-          quoteKind: QuoteKind.Single
-        }
+          quoteKind: QuoteKind.Single,
+        },
       })
       this.file = project.createSourceFile(
         opts.filename || 'tmp.ts',
@@ -47,13 +47,13 @@ export class DtoGenerator {
     const declar = this.useInterface
       ? this.file.addInterface({
           name: camelcase(`${name}Dto`, { pascalCase: true }),
-          isExported: true
+          isExported: true,
         })
       : this.file.addClass({
           name: camelcase(`${name}Dto`, { pascalCase: true }),
-          isExported: true
+          isExported: true,
         })
-    Object.keys(parsed).forEach(propKey => {
+    Object.keys(parsed).forEach((propKey) => {
       const field = parsed[propKey]
 
       let hasQuestionToken = false
@@ -72,32 +72,32 @@ export class DtoGenerator {
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: this.arrayWrap(field.type.type.toLocaleLowerCase(), isArray)
+            type: this.arrayWrap(field.type.type.toLocaleLowerCase(), isArray),
           })
           break
         case TypeEnum.Date:
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: this.arrayWrap('Date', isArray)
+            type: this.arrayWrap('Date', isArray),
           })
           break
         case TypeEnum.ObjectId:
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: this.arrayWrap('string', isArray)
+            type: this.arrayWrap('string', isArray),
           })
           break
         case TypeEnum.Schema:
           const subTypeName = camelcase(`${name}-${propKey}Sub`, {
-            pascalCase: true
+            pascalCase: true,
           })
           this.generateDtoByParsedSchema(field.schema, subTypeName)
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: this.arrayWrap(`${subTypeName}Dto`, isArray)
+            type: this.arrayWrap(`${subTypeName}Dto`, isArray),
           })
           break
         default:

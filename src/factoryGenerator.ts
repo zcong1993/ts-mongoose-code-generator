@@ -3,7 +3,7 @@ import {
   parseSchema,
   ParsedType,
   TypeEnum,
-  ParsedField
+  ParsedField,
 } from '@zcong/mongoose-schema-parser'
 import { Project, SourceFile, IndentationText, QuoteKind } from 'ts-morph'
 import * as mongoose from 'mongoose'
@@ -24,7 +24,7 @@ export interface FactoryGeneratorOptions {
 
 export enum helperFlags {
   shouldAddObjectIdFunc,
-  shouldAddEnumPickFunc
+  shouldAddEnumPickFunc,
 }
 
 export class FactoryGenerator {
@@ -48,8 +48,8 @@ export class FactoryGenerator {
       const project = new Project({
         manipulationSettings: {
           indentationText: IndentationText.TwoSpaces,
-          quoteKind: QuoteKind.Single
-        }
+          quoteKind: QuoteKind.Single,
+        },
       })
       this.file = project.createSourceFile(
         opts.filename || 'tmp.ts',
@@ -79,17 +79,17 @@ export class FactoryGenerator {
         {
           name: 'initial',
           type: `Partial<dto.${dtoName}>`,
-          initializer: '{}'
-        }
+          initializer: '{}',
+        },
       ],
       returnType: `dto.${dtoName}`,
-      isExported: true
+      isExported: true,
     })
 
-    func.setBodyText(writer => {
+    func.setBodyText((writer) => {
       writer.writeLine(`const mock: dto.${dtoName} = {`)
 
-      Object.keys(parsed).forEach(propKey => {
+      Object.keys(parsed).forEach((propKey) => {
         const field = parsed[propKey]
         const fd = this.getFieldByType(field, propKey, name)
         if (fd) {
@@ -118,7 +118,7 @@ export class FactoryGenerator {
     // custom default field name
     if (this.opts.customFields && this.opts.customFields.length > 0) {
       const cfs = this.opts.customFields.filter(
-        cf => cf.fieldName === propKey && cf.type === field.type.type
+        (cf) => cf.fieldName === propKey && cf.type === field.type.type
       )
 
       if (cfs.length > 0) {
@@ -157,7 +157,7 @@ export class FactoryGenerator {
         break
       case TypeEnum.Schema:
         const subTypeName = camelcase(`${name}-${propKey}Sub`, {
-          pascalCase: true
+          pascalCase: true,
         })
         this.generateFactoriesByParsedSchema(field.schema, subTypeName)
         factoryFunc = `${camelcase(`${subTypeName}-Factory`)}()`
@@ -176,10 +176,10 @@ export class FactoryGenerator {
   private addObjectIdFunc() {
     const func = this.file.addFunction({
       name: 'mongoObjectId',
-      returnType: 'string'
+      returnType: 'string',
     })
 
-    func.setBodyText(writer => {
+    func.setBodyText((writer) => {
       writer
         .writeLine(
           'const timestamp = (new Date().getTime() / 1000 | 0).toString(16)'
@@ -192,22 +192,22 @@ export class FactoryGenerator {
 
   private addEnumPickFunc() {
     const func = this.file.addFunction({
-      name: 'enumPick'
+      name: 'enumPick',
     })
 
     func.addTypeParameter({
       name: 'T',
-      default: 'any'
+      default: 'any',
     })
 
     func.addParameter({
       name: 'arr',
-      type: 'T[]'
+      type: 'T[]',
     })
 
     func.setReturnType('() => T')
 
-    func.setBodyText(writer => {
+    func.setBodyText((writer) => {
       writer
         .writeLine('function randomPick(): T {')
         .writeLine('  const randomI = Math.floor((Math.random() * arr.length))')
@@ -243,12 +243,12 @@ export class FactoryGenerator {
     this.file.addImportDeclarations([
       {
         moduleSpecifier: 'faker',
-        defaultImport: '* as faker'
+        defaultImport: '* as faker',
       },
       {
         moduleSpecifier: this.opts.dtoFilePath,
-        defaultImport: '* as dto'
-      }
+        defaultImport: '* as dto',
+      },
     ])
   }
 }

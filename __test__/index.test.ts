@@ -6,22 +6,22 @@ import { TypeEnum } from '@zcong/mongoose-schema-parser'
 const ObjectId = Schema.Types.ObjectId
 
 const nestedSchema = new Schema({
-  nestedName: String
+  nestedName: String,
 })
 
 const testSchema = new Schema({
   id: ObjectId,
   name: String,
   age: {
-    type: Number
+    type: Number,
   },
   requiredName: {
     type: String,
-    required: true
+    required: true,
   },
   enumString: {
     type: String,
-    enum: ['test1', 'test2']
+    enum: ['test1', 'test2'],
   },
   date: Date,
   bool: Boolean,
@@ -29,43 +29,43 @@ const testSchema = new Schema({
   nestedArr: [nestedSchema],
   nestedArr2: [
     {
-      type: nestedSchema
-    }
+      type: nestedSchema,
+    },
   ],
   simpleArr: [String],
   simpleArr2: [
     {
-      type: String
-    }
+      type: String,
+    },
   ],
   directNested: {
     name: String,
-    age: Number
+    age: Number,
   },
   directNestedArr: [
     {
       name: String,
-      age: Number
-    }
+      age: Number,
+    },
   ],
   ref: {
     type: ObjectId,
-    ref: 'Test'
+    ref: 'Test',
   },
   refs: [
     {
       type: ObjectId,
-      ref: 'Test'
-    }
+      ref: 'Test',
+    },
   ],
   withTypeField: [
     {
       type: {
-        type: String
+        type: String,
       },
-      other: String
-    }
-  ]
+      other: String,
+    },
+  ],
 })
 
 const expectedDtoClassCode = `
@@ -136,7 +136,7 @@ it('dtoGenerator should work well', () => {
 it('dtoGenerator use interface should work well', () => {
   const dtoGen = new DtoGenerator({
     filename: `${__dirname}/dtoGen.ts`,
-    useInterface: true
+    useInterface: true,
   })
   dtoGen.generateDtoBySchema(testSchema, 'Test')
   dtoGen.getFile().saveSync()
@@ -155,9 +155,9 @@ it('factoryGenerator should work well', () => {
       {
         value: 'customName',
         fieldName: 'name',
-        type: TypeEnum.String
-      }
-    ]
+        type: TypeEnum.String,
+      },
+    ],
   })
   factoryGen.generateFactoriesBySchema(testSchema, 'Test')
   factoryGen.getFile().saveSync()
