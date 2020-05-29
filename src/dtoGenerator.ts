@@ -16,7 +16,7 @@ export interface DtoGeneratorInitOptions {
 export class DtoGenerator {
   private file: SourceFile
   private useInterface: boolean
-  private importedTypes: boolean = false
+  private mongoseImports: Set<string> = new Set()
   constructor(opts: DtoGeneratorInitOptions) {
     this.useInterface = opts.useInterface
     if (opts.file) {
@@ -66,7 +66,7 @@ export class DtoGenerator {
         type: 'string | Types.ObjectId',
       })
 
-      this.importObjectId()
+      this.mongoseImports.add('Types')
     }
 
     Object.keys(parsed).forEach((propKey) => {
@@ -99,14 +99,19 @@ export class DtoGenerator {
           })
           break
         case TypeEnum.ObjectId:
-          this.importObjectId()
+          this.mongoseImports.add('Types')
           let type: string
           // handle ref type
           if (field.details && field.details.ref) {
             type = this.arrayWrapOr(
-              ['string', 'Types.ObjectId', `${field.details.ref}Dto`],
+              [
+                'string',
+                'Types.ObjectId',
+                `(${field.details.ref}Dto & Document)`,
+              ],
               isArray
             )
+            this.mongoseImports.add('Document')
           } else {
             type = this.arrayWrapOr(['string', 'Types.ObjectId'], isArray)
           }
@@ -134,10 +139,12 @@ export class DtoGenerator {
   }
 
   getGeneratedCode() {
+    this.handleMongooseImports()
     return this.file.getFullText()
   }
 
   getFile() {
+    this.handleMongooseImports()
     return this.file
   }
 
@@ -156,17 +163,13 @@ export class DtoGenerator {
     return types.map((t) => `Array<${t}>`).join(' | ')
   }
 
-  private importObjectId() {
-    if (!this.importedTypes) {
+  private handleMongooseImports() {
+    if (this.mongoseImports.size > 0) {
       this.file.addImportDeclaration({
         moduleSpecifier: 'mongoose',
-        namedImports: [
-          {
-            name: 'Types',
-          },
-        ],
+        namedImports: [...this.mongoseImports].map((name) => ({ name })),
       })
-      this.importedTypes = true
+      this.mongoseImports.clear()
     }
   }
 }

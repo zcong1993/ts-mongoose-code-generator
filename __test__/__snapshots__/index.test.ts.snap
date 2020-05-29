@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`dtoGenerator should work well 1`] = `
-"import { Types } from 'mongoose';
+"import { Types, Document } from 'mongoose';
 
 export class TestDto {
   id?: string | Types.ObjectId;
@@ -18,8 +18,8 @@ export class TestDto {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: Array<TestDirectNestedArrSubDto>;
-  ref?: string | Types.ObjectId | RefDto;
-  refs?: Array<string> | Array<Types.ObjectId> | Array<RefDto>;
+  ref?: string | Types.ObjectId | (RefDto & Document);
+  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefDto & Document)>;
   withTypeField?: Array<TestWithTypeFieldSubDto>;
 }
 
@@ -68,7 +68,7 @@ export class RefDto {
 `;
 
 exports[`dtoGenerator use interface should work well 1`] = `
-"import { Types } from 'mongoose';
+"import { Types, Document } from 'mongoose';
 
 export interface TestDto {
   id?: string | Types.ObjectId;
@@ -85,8 +85,8 @@ export interface TestDto {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: Array<TestDirectNestedArrSubDto>;
-  ref?: string | Types.ObjectId | RefDto;
-  refs?: Array<string> | Array<Types.ObjectId> | Array<RefDto>;
+  ref?: string | Types.ObjectId | (RefDto & Document);
+  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefDto & Document)>;
   withTypeField?: Array<TestWithTypeFieldSubDto>;
 }
 
