@@ -66,17 +66,7 @@ export class DtoGenerator {
         type: 'string | Types.ObjectId',
       })
 
-      if (!this.importedTypes) {
-        this.file.addImportDeclaration({
-          moduleSpecifier: 'mongoose',
-          namedImports: [
-            {
-              name: 'Types',
-            },
-          ],
-        })
-        this.importedTypes = true
-      }
+      this.importObjectId()
     }
 
     Object.keys(parsed).forEach((propKey) => {
@@ -109,10 +99,21 @@ export class DtoGenerator {
           })
           break
         case TypeEnum.ObjectId:
+          this.importObjectId()
+          let type: string
+          // handle ref type
+          if (field.details && field.details.ref) {
+            type = this.arrayWrap(
+              `string | Types.ObjectId | ${field.details.ref}Dto`,
+              isArray
+            )
+          } else {
+            type = this.arrayWrap('string | Types.ObjectId', isArray)
+          }
           declar.addProperty({
+            type,
             hasQuestionToken,
             name: propKey,
-            type: this.arrayWrap('string', isArray),
           })
           break
         case TypeEnum.Schema:
@@ -146,5 +147,19 @@ export class DtoGenerator {
 
   private arrayWrap(origin: string, isArray: boolean): string {
     return isArray ? `${origin}[]` : origin
+  }
+
+  private importObjectId() {
+    if (!this.importedTypes) {
+      this.file.addImportDeclaration({
+        moduleSpecifier: 'mongoose',
+        namedImports: [
+          {
+            name: 'Types',
+          },
+        ],
+      })
+      this.importedTypes = true
+    }
   }
 }

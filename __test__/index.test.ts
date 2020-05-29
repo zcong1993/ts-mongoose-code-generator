@@ -9,6 +9,10 @@ const nestedSchema = new Schema({
   nestedName: String,
 })
 
+const refSchema = new Schema({
+  refName: String,
+})
+
 const testSchema = new Schema({
   id: ObjectId,
   name: String,
@@ -50,12 +54,12 @@ const testSchema = new Schema({
   ],
   ref: {
     type: ObjectId,
-    ref: 'Test',
+    ref: 'Ref',
   },
   refs: [
     {
       type: ObjectId,
-      ref: 'Test',
+      ref: 'Ref',
     },
   ],
   withTypeField: [
@@ -125,6 +129,7 @@ export class TestWithTypeFieldSubDto {
 it('dtoGenerator should work well', () => {
   const dtoGen = new DtoGenerator({ filename: `${__dirname}/dtoGen.ts` })
   dtoGen.generateDtoBySchema(testSchema, 'Test')
+  dtoGen.generateDtoBySchema(refSchema, 'Ref')
   dtoGen.getFile().saveSync()
   const content = fs.readFileSync(`${__dirname}/dtoGen.ts`, 'utf8')
   const generated = dtoGen.getGeneratedCode()
@@ -139,6 +144,7 @@ it('dtoGenerator use interface should work well', () => {
     useInterface: true,
   })
   dtoGen.generateDtoBySchema(testSchema, 'Test')
+  dtoGen.generateDtoBySchema(refSchema, 'Ref')
   dtoGen.getFile().saveSync()
   const content = fs.readFileSync(`${__dirname}/dtoGen.ts`, 'utf8')
   const generated = dtoGen.getGeneratedCode()

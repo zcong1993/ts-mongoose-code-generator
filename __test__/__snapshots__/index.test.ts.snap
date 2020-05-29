@@ -4,7 +4,7 @@ exports[`dtoGenerator should work well 1`] = `
 "import { Types } from 'mongoose';
 
 export class TestDto {
-  id?: string;
+  id?: string | Types.ObjectId;
   name?: string;
   age?: number;
   requiredName: string;
@@ -18,8 +18,8 @@ export class TestDto {
   simpleArr2?: string[];
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: TestDirectNestedArrSubDto[];
-  ref?: string;
-  refs?: string[];
+  ref?: string | Types.ObjectId | RefDto;
+  refs?: string | Types.ObjectId[];
   withTypeField?: TestWithTypeFieldSubDto[];
 }
 
@@ -60,6 +60,10 @@ export class TestWithTypeFieldSubDto {
   type?: string;
   other?: string;
 }
+
+export class RefDto {
+  refName?: string;
+}
 "
 `;
 
@@ -67,7 +71,7 @@ exports[`dtoGenerator use interface should work well 1`] = `
 "import { Types } from 'mongoose';
 
 export interface TestDto {
-  id?: string;
+  id?: string | Types.ObjectId;
   name?: string;
   age?: number;
   requiredName: string;
@@ -81,8 +85,8 @@ export interface TestDto {
   simpleArr2?: string[];
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: TestDirectNestedArrSubDto[];
-  ref?: string;
-  refs?: string[];
+  ref?: string | Types.ObjectId | RefDto;
+  refs?: string | Types.ObjectId[];
   withTypeField?: TestWithTypeFieldSubDto[];
 }
 
@@ -122,6 +126,10 @@ export interface TestWithTypeFieldSubDto {
   _id?: string | Types.ObjectId;
   type?: string;
   other?: string;
+}
+
+export interface RefDto {
+  refName?: string;
 }
 "
 `;
