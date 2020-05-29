@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`v2 dtoGenerator should work well 1`] = `
+"import { Document, Types } from 'mongoose';
+
+export class TestDto extends Document {
+  id?: string | Types.ObjectId;
+  name?: string;
+  age?: number;
+  requiredName: string;
+  enumString?: 'test1' | 'test2';
+  date?: Date;
+  bool?: boolean;
+  nested?: TestNestedSubDto;
+  nestedArr?: Array<TestNestedArrSubDto>;
+  nestedArr2?: Array<TestNestedArr2SubDto>;
+  simpleArr?: Array<string>;
+  simpleArr2?: Array<string>;
+  directNestedArr?: Array<TestDirectNestedArrSubDto>;
+  ref?: string | Types.ObjectId | RefDto;
+  refs?: Array<string> | Array<Types.ObjectId> | Array<RefDto>;
+  withTypeField?: Array<TestWithTypeFieldSubDto>;
+  _id?: string | Types.ObjectId;
+  updated_at?: Date;
+  created_at?: Date;
+  directNested?: TestDirectNestedSubDto;
+}
+
+export class TestNestedSubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export class TestNestedArrSubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export class TestNestedArr2SubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export class TestDirectNestedArrSubDto {
+  name?: string;
+  age?: number;
+  _id?: string | Types.ObjectId;
+}
+
+export class TestWithTypeFieldSubDto {
+  type?: string;
+  other?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export class TestDirectNestedSubDto {
+  name?: string;
+  age?: number;
+}
+
+export class RefDto extends Document {
+  refName?: string;
+  _id?: string | Types.ObjectId;
+  updatedAt?: Date;
+  createdAt?: Date;
+}
+"
+`;
+
+exports[`v2 dtoGenerator use interface should work well 1`] = `
+"import { Document, Types } from 'mongoose';
+
+export interface TestDto extends Document {
+  id?: string | Types.ObjectId;
+  name?: string;
+  age?: number;
+  requiredName: string;
+  enumString?: 'test1' | 'test2';
+  date?: Date;
+  bool?: boolean;
+  nested?: TestNestedSubDto;
+  nestedArr?: Array<TestNestedArrSubDto>;
+  nestedArr2?: Array<TestNestedArr2SubDto>;
+  simpleArr?: Array<string>;
+  simpleArr2?: Array<string>;
+  directNestedArr?: Array<TestDirectNestedArrSubDto>;
+  ref?: string | Types.ObjectId | RefDto;
+  refs?: Array<string> | Array<Types.ObjectId> | Array<RefDto>;
+  withTypeField?: Array<TestWithTypeFieldSubDto>;
+  _id?: string | Types.ObjectId;
+  updated_at?: Date;
+  created_at?: Date;
+  directNested?: TestDirectNestedSubDto;
+}
+
+export interface TestNestedSubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestNestedArrSubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestNestedArr2SubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestDirectNestedArrSubDto {
+  name?: string;
+  age?: number;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestWithTypeFieldSubDto {
+  type?: string;
+  other?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestDirectNestedSubDto {
+  name?: string;
+  age?: number;
+}
+
+export interface RefDto extends Document {
+  refName?: string;
+  _id?: string | Types.ObjectId;
+  updatedAt?: Date;
+  createdAt?: Date;
+}
+"
+`;

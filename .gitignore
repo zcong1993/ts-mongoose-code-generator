@@ -4,4 +4,4 @@ node_modules
 dist
 .idea
 coverage
-src/t.ts
+src/**/t.ts
