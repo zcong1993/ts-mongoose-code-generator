@@ -16,7 +16,7 @@ export interface DtoGeneratorInitOptions {
 export class DtoGenerator {
   private file: SourceFile
   private useInterface: boolean
-  private importedObjectId: boolean = false
+  private importedTypes: boolean = false
   constructor(opts: DtoGeneratorInitOptions) {
     this.useInterface = opts.useInterface
     if (opts.file) {
@@ -63,19 +63,19 @@ export class DtoGenerator {
       declar.addProperty({
         hasQuestionToken: true,
         name: '_id',
-        type: 'string | ObjectId',
+        type: 'string | Types.ObjectId',
       })
 
-      if (!this.importedObjectId) {
+      if (!this.importedTypes) {
         this.file.addImportDeclaration({
           moduleSpecifier: 'mongoose',
           namedImports: [
             {
-              name: 'ObjectId',
+              name: 'Types',
             },
           ],
         })
-        this.importedObjectId = true
+        this.importedTypes = true
       }
     }
 

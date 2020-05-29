@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`dtoGenerator should work well 1`] = `
-"import { ObjectId } from 'mongoose';
+"import { Types } from 'mongoose';
 
 export class TestDto {
   id?: string;
@@ -24,39 +24,39 @@ export class TestDto {
 }
 
 export class TestNestedSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   nestedName?: string;
 }
 
 export class TestNestedArrSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   nestedName?: string;
 }
 
 export class TestNestedArr2SubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   type?: TestNestedArr2SubTypeSubDto;
 }
 
 export class TestNestedArr2SubTypeSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   nestedName?: string;
 }
 
 export class TestDirectNestedSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   name?: string;
   age?: number;
 }
 
 export class TestDirectNestedArrSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   name?: string;
   age?: number;
 }
 
 export class TestWithTypeFieldSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   type?: string;
   other?: string;
 }
@@ -64,7 +64,7 @@ export class TestWithTypeFieldSubDto {
 `;
 
 exports[`dtoGenerator use interface should work well 1`] = `
-"import { ObjectId } from 'mongoose';
+"import { Types } from 'mongoose';
 
 export interface TestDto {
   id?: string;
@@ -87,39 +87,39 @@ export interface TestDto {
 }
 
 export interface TestNestedSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   nestedName?: string;
 }
 
 export interface TestNestedArrSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   nestedName?: string;
 }
 
 export interface TestNestedArr2SubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   type?: TestNestedArr2SubTypeSubDto;
 }
 
 export interface TestNestedArr2SubTypeSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   nestedName?: string;
 }
 
 export interface TestDirectNestedSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   name?: string;
   age?: number;
 }
 
 export interface TestDirectNestedArrSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   name?: string;
   age?: number;
 }
 
 export interface TestWithTypeFieldSubDto {
-  _id?: string | ObjectId;
+  _id?: string | Types.ObjectId;
   type?: string;
   other?: string;
 }
