@@ -41,13 +41,14 @@ export class DtoGenerator {
 
   generateDtoBySchema(schema: mongoose.Schema, name: string) {
     const parsed = parseSchema(schema)
-    this.generateDtoByParsedSchema(parsed, name)
+    this.generateDtoByParsedSchema(parsed, name, false, schema)
   }
 
   generateDtoByParsedSchema(
     parsed: ParsedType,
     name: string,
-    isSub: boolean = false
+    isSub?: boolean,
+    schema?: mongoose.Schema
   ) {
     const declar = this.useInterface
       ? this.file.addInterface({
@@ -136,6 +137,66 @@ export class DtoGenerator {
           break
       }
     })
+
+    // handle timestamp
+    if (
+      schema &&
+      (schema as any).options &&
+      (schema as any).options.timestamps
+    ) {
+      const opt: mongoose.SchemaOptions = (schema as any).options
+      let createdAtFieldName: string
+      let updatedAtFieldName: string
+      if (typeof opt.timestamps === 'boolean') {
+        if (opt.timestamps) {
+          createdAtFieldName = 'createdAt'
+          updatedAtFieldName = 'updatedAt'
+        }
+      } else {
+        if (
+          typeof opt.timestamps.createdAt === 'boolean' &&
+          opt.timestamps.createdAt
+        ) {
+          createdAtFieldName = 'createdAt'
+        }
+        if (
+          typeof opt.timestamps.updatedAt === 'boolean' &&
+          opt.timestamps.updatedAt
+        ) {
+          updatedAtFieldName = 'updatedAt'
+        }
+
+        if (
+          typeof opt.timestamps.createdAt === 'string' &&
+          opt.timestamps.createdAt
+        ) {
+          createdAtFieldName = opt.timestamps.createdAt
+        }
+
+        if (
+          typeof opt.timestamps.updatedAt === 'string' &&
+          opt.timestamps.updatedAt
+        ) {
+          updatedAtFieldName = opt.timestamps.updatedAt
+        }
+      }
+
+      if (createdAtFieldName) {
+        declar.addProperty({
+          hasQuestionToken: true,
+          name: createdAtFieldName,
+          type: 'Date',
+        })
+      }
+
+      if (updatedAtFieldName) {
+        declar.addProperty({
+          hasQuestionToken: true,
+          name: updatedAtFieldName,
+          type: 'Date',
+        })
+      }
+    }
   }
 
   getGeneratedCode() {
