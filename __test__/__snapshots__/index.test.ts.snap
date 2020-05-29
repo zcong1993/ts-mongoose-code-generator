@@ -12,15 +12,16 @@ export class TestDto {
   date?: Date;
   bool?: boolean;
   nested?: TestNestedSubDto;
-  nestedArr?: TestNestedArrSubDto[];
-  nestedArr2?: TestNestedArr2SubDto[];
-  simpleArr?: string[];
-  simpleArr2?: string[];
+  nestedArr?: Array<TestNestedArrSubDto>;
+  nestedArr2?: Array<TestNestedArr2SubDto>;
+  simpleArr?: Array<string>;
+  simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubDto;
-  directNestedArr?: TestDirectNestedArrSubDto[];
-  ref?: string | Types.ObjectId | RefDto;
-  refs?: (string | Types.ObjectId)[];
-  withTypeField?: TestWithTypeFieldSubDto[];
+  directNestedArr?: Array<TestDirectNestedArrSubDto>;
+  ref?: string | Types.ObjectId | RefDto
+  refs?: Array<string> | Array<Types.ObjectId>;
+  withTypeField?: Array<TestWithTypeFieldSubDto>;
+);
 }
 
 export class TestNestedSubDto {
@@ -79,15 +80,16 @@ export interface TestDto {
   date?: Date;
   bool?: boolean;
   nested?: TestNestedSubDto;
-  nestedArr?: TestNestedArrSubDto[];
-  nestedArr2?: TestNestedArr2SubDto[];
-  simpleArr?: string[];
-  simpleArr2?: string[];
+  nestedArr?: Array<TestNestedArrSubDto>;
+  nestedArr2?: Array<TestNestedArr2SubDto>;
+  simpleArr?: Array<string>;
+  simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubDto;
-  directNestedArr?: TestDirectNestedArrSubDto[];
-  ref?: string | Types.ObjectId | RefDto;
-  refs?: (string | Types.ObjectId)[];
-  withTypeField?: TestWithTypeFieldSubDto[];
+  directNestedArr?: Array<TestDirectNestedArrSubDto>;
+  ref?: string | Types.ObjectId | RefDto
+  refs?: Array<string> | Array<Types.ObjectId>;
+  withTypeField?: Array<TestWithTypeFieldSubDto>;
+);
 }
 
 export interface TestNestedSubDto {
