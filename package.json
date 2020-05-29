@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "@zcong/mongoose-schema-parser": "^0.1.8",
+    "@zcong/mongoose-schema-parser": "^0.2.0",
     "camelcase": "^6.0.0",
     "ts-morph": "^7.1.0"
   }

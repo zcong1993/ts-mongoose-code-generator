@@ -19,7 +19,7 @@ export class TestDto {
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: Array<TestDirectNestedArrSubDto>;
   ref?: string | Types.ObjectId | RefDto;
-  refs?: Array<string> | Array<Types.ObjectId>;
+  refs?: Array<string> | Array<Types.ObjectId> | Array<RefDto>;
   withTypeField?: Array<TestWithTypeFieldSubDto>;
 }
 
@@ -86,7 +86,7 @@ export interface TestDto {
   directNested?: TestDirectNestedSubDto;
   directNestedArr?: Array<TestDirectNestedArrSubDto>;
   ref?: string | Types.ObjectId | RefDto;
-  refs?: Array<string> | Array<Types.ObjectId>;
+  refs?: Array<string> | Array<Types.ObjectId> | Array<RefDto>;
   withTypeField?: Array<TestWithTypeFieldSubDto>;
 }
 
