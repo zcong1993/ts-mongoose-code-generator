@@ -45,15 +45,11 @@ export class DtoGenerator {
       ? this.file.addInterface({
           name: camelcase(`${name}Dto`, { pascalCase: true }),
           isExported: true,
-          extends: isSub ? [] : ['Document'],
         })
       : this.file.addClass({
           name: camelcase(`${name}Dto`, { pascalCase: true }),
           isExported: true,
-          extends: isSub ? null : 'Document',
         })
-
-    this.mongoseImports.add('Document')
 
     Object.keys(parsed).forEach((propKey) => {
       const field = parsed[propKey]
@@ -96,7 +92,11 @@ export class DtoGenerator {
           // handle ref type
           if (field.options && field.options.ref) {
             type = this.arrayWrapOr(
-              ['string', 'Types.ObjectId', `${field.options.ref}Dto`],
+              [
+                'string',
+                'Types.ObjectId',
+                `(${field.options.ref}Dto | Document)`,
+              ],
               isArray
             )
             this.mongoseImports.add('Document')
