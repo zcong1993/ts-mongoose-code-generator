@@ -31,12 +31,10 @@ export class ModelGenerator {
       })
       this.file = project.createSourceFile(
         opts.filename || 'tmp.ts',
-        {},
+        `// This file is created by @zcong/ts-mongoose-code-generator`,
         { overwrite: true }
       )
     }
-
-    this.init()
   }
 
   generateModelBySchema(schema: mongoose.Schema, name: string) {
@@ -148,10 +146,6 @@ export class ModelGenerator {
   getFile() {
     this.handleMongooseImports()
     return this.file
-  }
-
-  private init() {
-    this.file.removeText()
   }
 
   private arrayWrap(origin: string, isArray: boolean): string {
