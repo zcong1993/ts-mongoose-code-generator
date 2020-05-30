@@ -130,7 +130,7 @@ export class ModelGenerator {
         default:
           /* istanbul ignore next */
           console.log(
-            `[@zcong/ts-mongoose-code-generator] unhandled type ${
+            `[@zcong/ts-mongoose-code-generator] unhandled, propKey: ${propKey}, type: ${
               field.type.type
             }, options: ${JSON.stringify(field)}`
           )
