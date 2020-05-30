@@ -73,6 +73,7 @@ const testSchema = new Schema(
         other: String,
       },
     ],
+    mixedArr: { type: Array },
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 )

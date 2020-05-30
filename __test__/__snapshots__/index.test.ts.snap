@@ -3,6 +3,7 @@
 exports[`v2 modelGenerator should work well 1`] = `
 "import { Types, Document } from 'mongoose';
 
+// This file is created by @zcong/ts-mongoose-code-generator
 export class TestModel {
   id?: string | Types.ObjectId;
   name?: string;
@@ -21,6 +22,7 @@ export class TestModel {
   ref?: string | Types.ObjectId | (RefModel | Document);
   refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
+  mixedArr?: Array<any>;
   _id?: string | Types.ObjectId;
   updated_at?: Date;
   created_at?: Date;
@@ -70,6 +72,7 @@ export class RefModel {
 exports[`v2 modelGenerator stringEnumUseUnionType flag should work well 1`] = `
 "import { Types, Document } from 'mongoose';
 
+// This file is created by @zcong/ts-mongoose-code-generator
 export interface TestModel {
   id?: string | Types.ObjectId;
   name?: string;
@@ -88,6 +91,7 @@ export interface TestModel {
   ref?: string | Types.ObjectId | (RefModel | Document);
   refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
+  mixedArr?: Array<any>;
   _id?: string | Types.ObjectId;
   updated_at?: Date;
   created_at?: Date;
@@ -137,6 +141,7 @@ export interface RefModel {
 exports[`v2 modelGenerator use interface should work well 1`] = `
 "import { Types, Document } from 'mongoose';
 
+// This file is created by @zcong/ts-mongoose-code-generator
 export interface TestModel {
   id?: string | Types.ObjectId;
   name?: string;
@@ -155,6 +160,7 @@ export interface TestModel {
   ref?: string | Types.ObjectId | (RefModel | Document);
   refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
+  mixedArr?: Array<any>;
   _id?: string | Types.ObjectId;
   updated_at?: Date;
   created_at?: Date;

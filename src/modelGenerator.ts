@@ -127,6 +127,14 @@ export class ModelGenerator {
           })
           break
         }
+        case 'Mixed': {
+          declar.addProperty({
+            hasQuestionToken,
+            name: propKey,
+            type: this.arrayWrap('any', isArray),
+          })
+          break
+        }
         default:
           /* istanbul ignore next */
           console.log(
