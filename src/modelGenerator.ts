@@ -3,21 +3,22 @@ import { ParsedType, parseSchema } from '@zcong/mongoose-schema-parser/dist/v2'
 import * as mongoose from 'mongoose'
 import * as camelcase from 'camelcase'
 
-export interface DtoGeneratorInitOptions {
+export interface ModelGeneratorInitOptions {
   file?: SourceFile
   filename?: string
   useInterface?: boolean
   stringEnumUseUnionType?: boolean
 }
 
-export class DtoGenerator {
-  private readonly opts: DtoGeneratorInitOptions
+export class ModelGenerator {
+  private readonly opts: ModelGeneratorInitOptions
   private file: SourceFile
   private useInterface: boolean
   private mongoseImports: Set<string> = new Set()
-  constructor(opts: DtoGeneratorInitOptions) {
+  constructor(opts: ModelGeneratorInitOptions) {
     this.opts = opts
     this.useInterface = opts.useInterface
+    /* istanbul ignore next */
     if (opts.file) {
       this.file = opts.file
     } else {
@@ -38,12 +39,12 @@ export class DtoGenerator {
     this.init()
   }
 
-  generateDtoBySchema(schema: mongoose.Schema, name: string) {
+  generateModelBySchema(schema: mongoose.Schema, name: string) {
     const parsed = parseSchema(schema)
-    this.generateDtoByParsedSchema(parsed, name, false)
+    this.generateModelByParsedSchema(parsed, name)
   }
 
-  generateDtoByParsedSchema(parsed: ParsedType, name: string, isSub?: boolean) {
+  generateModelByParsedSchema(parsed: ParsedType, name: string) {
     const declar = this.useInterface
       ? this.file.addInterface({
           name: camelcase(`${name}Dto`, { pascalCase: true }),
@@ -120,7 +121,7 @@ export class DtoGenerator {
           const subTypeName = camelcase(`${name}-${propKey}Sub`, {
             pascalCase: true,
           })
-          this.generateDtoByParsedSchema(field.schema, subTypeName, true)
+          this.generateModelByParsedSchema(field.schema, subTypeName)
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
@@ -129,7 +130,12 @@ export class DtoGenerator {
           break
         }
         default:
-          break
+          /* istanbul ignore next */
+          console.log(
+            `[@zcong/ts-mongoose-code-generator] unhandled type ${
+              field.type.type
+            }, options: ${JSON.stringify(field)}`
+          )
       }
     })
   }

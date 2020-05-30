@@ -1,11 +1,18 @@
 {
   "name": "@zcong/ts-mongoose-code-generator",
   "version": "0.9.0",
-  "description": "generate ts dto and model factory code for mongoose",
+  "description": "generate ts model types from mongoose schema",
   "main": "./dist/index.js",
   "files": [
     "dist",
     "src"
+  ],
+  "keywords": [
+    "mongoose",
+    "typescript",
+    "model",
+    "generator",
+    "schema"
   ],
   "scripts": {
     "build": "tsc",
