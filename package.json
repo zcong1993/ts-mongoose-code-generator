@@ -55,6 +55,10 @@
       "jsx",
       "json",
       "node"
+    ],
+    "collectCoverageFrom": [
+      "src/index.ts",
+      "src/modelGenerator.ts"
     ]
   },
   "lint-staged": {
