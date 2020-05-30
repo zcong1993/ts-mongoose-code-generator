@@ -7,13 +7,16 @@ export interface DtoGeneratorInitOptions {
   file?: SourceFile
   filename?: string
   useInterface?: boolean
+  stringEnumUseUnionType?: boolean
 }
 
 export class DtoGenerator {
+  private readonly opts: DtoGeneratorInitOptions
   private file: SourceFile
   private useInterface: boolean
   private mongoseImports: Set<string> = new Set()
   constructor(opts: DtoGeneratorInitOptions) {
+    this.opts = opts
     this.useInterface = opts.useInterface
     if (opts.file) {
       this.file = opts.file
@@ -68,7 +71,9 @@ export class DtoGenerator {
         case 'String':
         case 'Number': {
           const t =
-            field.type.type === 'String' && field.type.enumValues
+            field.type.type === 'String' &&
+            field.type.enumValues &&
+            this.opts.stringEnumUseUnionType
               ? field.type.enumValues.map((s) => `'${s}'`).join(' | ')
               : field.type.type.toLocaleLowerCase()
           declar.addProperty({

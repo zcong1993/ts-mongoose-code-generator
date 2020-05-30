@@ -103,3 +103,19 @@ it('v2 dtoGenerator use interface should work well', () => {
   expect(generated).toMatchSnapshot()
   fs.unlinkSync(`${__dirname}/dtoGenv2.ts`)
 })
+
+it('v2 dtoGenerator stringEnumUseUnionType flag should work well', () => {
+  const dtoGen = new DtoGenerator({
+    filename: `${__dirname}/dtoGenv2.ts`,
+    useInterface: true,
+    stringEnumUseUnionType: true,
+  })
+  dtoGen.generateDtoBySchema(testSchema, 'Test')
+  dtoGen.generateDtoBySchema(refSchema, 'Ref')
+  dtoGen.getFile().saveSync()
+  const content = fs.readFileSync(`${__dirname}/dtoGenv2.ts`, 'utf8')
+  const generated = dtoGen.getGeneratedCode()
+  expect(content).toEqual(generated)
+  expect(generated).toMatchSnapshot()
+  fs.unlinkSync(`${__dirname}/dtoGenv2.ts`)
+})

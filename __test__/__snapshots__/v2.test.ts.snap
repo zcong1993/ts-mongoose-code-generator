@@ -8,7 +8,7 @@ export class TestDto {
   name?: string;
   age?: number;
   requiredName: string;
-  enumString?: 'test1' | 'test2';
+  enumString?: string;
   date?: Date;
   bool?: boolean;
   nested?: TestNestedSubDto;
@@ -67,7 +67,7 @@ export class RefDto {
 "
 `;
 
-exports[`v2 dtoGenerator use interface should work well 1`] = `
+exports[`v2 dtoGenerator stringEnumUseUnionType flag should work well 1`] = `
 "import { Types, Document } from 'mongoose';
 
 export interface TestDto {
@@ -76,6 +76,73 @@ export interface TestDto {
   age?: number;
   requiredName: string;
   enumString?: 'test1' | 'test2';
+  date?: Date;
+  bool?: boolean;
+  nested?: TestNestedSubDto;
+  nestedArr?: Array<TestNestedArrSubDto>;
+  nestedArr2?: Array<TestNestedArr2SubDto>;
+  simpleArr?: Array<string>;
+  simpleArr2?: Array<string>;
+  directNested?: TestDirectNestedSubDto;
+  directNestedArr?: Array<TestDirectNestedArrSubDto>;
+  ref?: string | Types.ObjectId | (RefDto | Document);
+  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefDto | Document)>;
+  withTypeField?: Array<TestWithTypeFieldSubDto>;
+  _id?: string | Types.ObjectId;
+  updated_at?: Date;
+  created_at?: Date;
+}
+
+export interface TestNestedSubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestNestedArrSubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestNestedArr2SubDto {
+  nestedName?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestDirectNestedSubDto {
+  name?: string;
+  age?: number;
+}
+
+export interface TestDirectNestedArrSubDto {
+  name?: string;
+  age?: number;
+  _id?: string | Types.ObjectId;
+}
+
+export interface TestWithTypeFieldSubDto {
+  type?: string;
+  other?: string;
+  _id?: string | Types.ObjectId;
+}
+
+export interface RefDto {
+  refName?: string;
+  _id?: string | Types.ObjectId;
+  updatedAt?: Date;
+  createdAt?: Date;
+}
+"
+`;
+
+exports[`v2 dtoGenerator use interface should work well 1`] = `
+"import { Types, Document } from 'mongoose';
+
+export interface TestDto {
+  id?: string | Types.ObjectId;
+  name?: string;
+  age?: number;
+  requiredName: string;
+  enumString?: string;
   date?: Date;
   bool?: boolean;
   nested?: TestNestedSubDto;
