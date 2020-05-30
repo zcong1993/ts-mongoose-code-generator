@@ -135,7 +135,38 @@ export class ModelGenerator {
           })
           break
         }
+        case 'Buffer': {
+          declar.addProperty({
+            hasQuestionToken,
+            name: propKey,
+            type: this.arrayWrap('Buffer', isArray),
+          })
+          break
+        }
+        case 'Map': {
+          declar.addProperty({
+            hasQuestionToken,
+            name: propKey,
+            type: this.arrayWrap('any', isArray), // todo: use any
+          })
+          break
+        }
+        case 'Decimal128': {
+          declar.addProperty({
+            hasQuestionToken,
+            name: propKey,
+            type: this.arrayWrap('Types.Decimal128', isArray),
+          })
+          this.mongoseImports.add('Types')
+          break
+        }
         default:
+          /* istanbul ignore next */
+          declar.addProperty({
+            hasQuestionToken,
+            name: propKey,
+            type: this.arrayWrap('any', isArray),
+          })
           /* istanbul ignore next */
           console.log(
             `[@zcong/ts-mongoose-code-generator] unhandled, propKey: ${propKey}, type: ${
