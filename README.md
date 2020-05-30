@@ -29,12 +29,12 @@ const testSchema = new Schema({
 }
 
 // useInterface: use class or interface as type declaration
-const dtoGen = new ModelGenerator({ filename: `${__dirname}/modelGen.ts`, useInterface: false })
+const dtoGen = new ModelGenerator({ filename: `${__dirname}/modelGen.ts`, useInterface: true })
 dtoGen.generateModelBySchema(testSchema, 'Test')
 dtoGen.getFile().saveSync() // save generated code as file
 dtoGen.getGeneratedCode() // get generated code content
 
-// export interface TestDto {
+// export interface TestModel {
 //   name?: string;
 //   age?: number;
 //   requiredName: string;

@@ -47,11 +47,11 @@ export class ModelGenerator {
   generateModelByParsedSchema(parsed: ParsedType, name: string) {
     const declar = this.useInterface
       ? this.file.addInterface({
-          name: camelcase(`${name}Dto`, { pascalCase: true }),
+          name: camelcase(`${name}Model`, { pascalCase: true }),
           isExported: true,
         })
       : this.file.addClass({
-          name: camelcase(`${name}Dto`, { pascalCase: true }),
+          name: camelcase(`${name}Model`, { pascalCase: true }),
           isExported: true,
         })
 
@@ -101,7 +101,7 @@ export class ModelGenerator {
               [
                 'string',
                 'Types.ObjectId',
-                `(${field.options.ref}Dto | Document)`,
+                `(${field.options.ref}Model | Document)`,
               ],
               isArray
             )
@@ -125,7 +125,7 @@ export class ModelGenerator {
           declar.addProperty({
             hasQuestionToken,
             name: propKey,
-            type: this.arrayWrap(`${subTypeName}Dto`, isArray),
+            type: this.arrayWrap(`${subTypeName}Model`, isArray),
           })
           break
         }
