@@ -23,6 +23,11 @@ export class TestModel {
   refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
   mixedArr?: Array<any>;
+  mixed?: any;
+  bf?: Buffer;
+  mp?: any;
+  dc?: Types.Decimal128;
+  dcs?: Array<Types.Decimal128>;
   _id?: string | Types.ObjectId;
   updated_at?: Date;
   created_at?: Date;
@@ -92,6 +97,11 @@ export interface TestModel {
   refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
   mixedArr?: Array<any>;
+  mixed?: any;
+  bf?: Buffer;
+  mp?: any;
+  dc?: Types.Decimal128;
+  dcs?: Array<Types.Decimal128>;
   _id?: string | Types.ObjectId;
   updated_at?: Date;
   created_at?: Date;
@@ -161,6 +171,11 @@ export interface TestModel {
   refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
   mixedArr?: Array<any>;
+  mixed?: any;
+  bf?: Buffer;
+  mp?: any;
+  dc?: Types.Decimal128;
+  dcs?: Array<Types.Decimal128>;
   _id?: string | Types.ObjectId;
   updated_at?: Date;
   created_at?: Date;

@@ -1,5 +1,5 @@
 import * as fs from 'fs'
-import { Schema } from 'mongoose'
+import { Schema, Types } from 'mongoose'
 import { ModelGenerator } from '../src'
 
 const ObjectId = Schema.Types.ObjectId
@@ -74,6 +74,14 @@ const testSchema = new Schema(
       },
     ],
     mixedArr: { type: Array },
+    mixed: Schema.Types.Mixed,
+    bf: Buffer,
+    mp: {
+      type: Map,
+      of: Number,
+    },
+    dc: Types.Decimal128,
+    dcs: [Types.Decimal128],
   },
   { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } }
 )
