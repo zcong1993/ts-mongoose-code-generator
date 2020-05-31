@@ -160,6 +160,7 @@ export class ModelGenerator {
           this.mongoseImports.add('Types')
           break
         }
+        /* istanbul ignore next */
         default:
           /* istanbul ignore next */
           declar.addProperty({
