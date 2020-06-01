@@ -73,7 +73,7 @@ export class ModelGenerator {
             field.type.type === 'String' &&
             field.type.enumValues &&
             this.opts.stringEnumUseUnionType
-              ? field.type.enumValues.map((s) => `'${s}'`).join(' | ')
+              ? field.type.enumValues.map((s: string) => `'${s}'`).join(' | ')
               : field.type.type.toLocaleLowerCase()
           declar.addProperty({
             hasQuestionToken,
@@ -99,7 +99,7 @@ export class ModelGenerator {
               [
                 'string',
                 'Types.ObjectId',
-                `(${field.options.ref}Model | Document)`,
+                `(${field.options.ref}Model & Document)`,
               ],
               isArray
             )

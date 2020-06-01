@@ -19,8 +19,8 @@ export class TestModel {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubModel;
   directNestedArr?: Array<TestDirectNestedArrSubModel>;
-  ref?: string | Types.ObjectId | (RefModel | Document);
-  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
+  ref?: string | Types.ObjectId | (RefModel & Document);
+  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel & Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
   mixedArr?: Array<any>;
   mixed?: any;
@@ -93,8 +93,8 @@ export interface TestModel {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubModel;
   directNestedArr?: Array<TestDirectNestedArrSubModel>;
-  ref?: string | Types.ObjectId | (RefModel | Document);
-  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
+  ref?: string | Types.ObjectId | (RefModel & Document);
+  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel & Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
   mixedArr?: Array<any>;
   mixed?: any;
@@ -167,8 +167,8 @@ export interface TestModel {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubModel;
   directNestedArr?: Array<TestDirectNestedArrSubModel>;
-  ref?: string | Types.ObjectId | (RefModel | Document);
-  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel | Document)>;
+  ref?: string | Types.ObjectId | (RefModel & Document);
+  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel & Document)>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
   mixedArr?: Array<any>;
   mixed?: any;
