@@ -12,25 +12,33 @@ export type ArrayPopulateModelType<T> = T extends Array<NonPopulateModelType>
   : T
 
 export function forcePopulateModelType<T>(
-  t: PopulateType<T>
-): t is PopulateModelType<T>
-export function forcePopulateModelType<T>(
-  t: ArrayPopulateType<T>
-): t is ArrayPopulateModelType<Array<T>>
-export function forcePopulateModelType(_: any): boolean {
+  _: PopulateType<T>
+): _ is PopulateModelType<T> {
   return true
 }
 
-export function forceStringType<T>(t: PopulateType<T>): t is string
-export function forceStringType<T>(t: ArrayPopulateType<T>): t is Array<string>
-export function forceStringType(_: any): boolean {
+export function forcePopulateModelArrayType<T>(
+  _: ArrayPopulateType<T>
+): _ is ArrayPopulateModelType<Array<T>> {
   return true
 }
 
-export function forceObjectIDType<T>(t: PopulateType<T>): t is Types.ObjectId
-export function forceObjectIDType<T>(
-  t: ArrayPopulateType<T>
-): t is Array<Types.ObjectId>
-export function forceObjectIDType(_: any): boolean {
+export function forceStringType<T>(_: PopulateType<T>): _ is string {
+  return true
+}
+
+export function forceStringArrayType<T>(
+  _: ArrayPopulateType<T>
+): _ is Array<string> {
+  return true
+}
+
+export function forceObjectIDType<T>(_: PopulateType<T>): _ is Types.ObjectId {
+  return true
+}
+
+export function forceObjectIDArrayType<T>(
+  _: ArrayPopulateType<T>
+): _ is Array<Types.ObjectId> {
   return true
 }
