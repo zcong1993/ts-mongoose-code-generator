@@ -8,6 +8,7 @@ export interface ModelGeneratorInitOptions {
   filename?: string
   useInterface?: boolean
   stringEnumUseUnionType?: boolean
+  arrayStyle?: 'squareBrackets' | 'generic'
 }
 
 export class ModelGenerator {
@@ -18,6 +19,12 @@ export class ModelGenerator {
   constructor(opts: ModelGeneratorInitOptions) {
     this.opts = opts
     this.useInterface = opts.useInterface
+    if (
+      !this.opts.arrayStyle ||
+      !['squareBrackets', 'generic'].includes(this.opts.arrayStyle)
+    ) {
+      this.opts.arrayStyle = 'squareBrackets'
+    }
     /* istanbul ignore next */
     if (opts.file) {
       this.file = opts.file
@@ -189,6 +196,9 @@ export class ModelGenerator {
   }
 
   private arrayWrap(origin: string, isArray: boolean): string {
+    if (this.opts.arrayStyle === 'squareBrackets') {
+      return isArray ? `${origin}[]` : origin
+    }
     return isArray ? `Array<${origin}>` : origin
   }
 
@@ -196,6 +206,11 @@ export class ModelGenerator {
     if (!isArray) {
       return types.join(' | ')
     }
+
+    if (this.opts.arrayStyle === 'squareBrackets') {
+      return types.map((t) => `${t}[]`).join(' | ')
+    }
+
     return types.map((t) => `Array<${t}>`).join(' | ')
   }
 

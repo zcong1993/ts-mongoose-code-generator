@@ -29,7 +29,12 @@ const testSchema = new Schema({
 }
 
 // useInterface: use class or interface as type declaration
-const dtoGen = new ModelGenerator({ filename: `${__dirname}/modelGen.ts`, useInterface: true })
+const dtoGen = new ModelGenerator({
+  filename: `${__dirname}/modelGen.ts`,
+  useInterface: true, // use interface type or class type
+  arrayStyle: 'squareBrackets', // arrayStyle squareBrackets(T[]) or generic(Array<T>)
+  stringEnumUseUnionType: true, // if set true, String type with enum field ['test1', 'test2'] will be type `'test1' | 'test2'`
+})
 dtoGen.generateModelBySchema(testSchema, 'Test')
 dtoGen.getFile().saveSync() // save generated code as file
 dtoGen.getGeneratedCode() // get generated code content

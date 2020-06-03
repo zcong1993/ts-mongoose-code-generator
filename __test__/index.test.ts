@@ -128,3 +128,20 @@ it('v2 modelGenerator stringEnumUseUnionType flag should work well', () => {
   expect(generated).toMatchSnapshot()
   fs.unlinkSync(`${__dirname}/dtoGenv2.ts`)
 })
+
+it('v2 generic arrayStyle should work well', () => {
+  const dtoGen = new ModelGenerator({
+    filename: `${__dirname}/dtoGenv2.ts`,
+    useInterface: true,
+    stringEnumUseUnionType: true,
+    arrayStyle: 'generic',
+  })
+  dtoGen.generateModelBySchema(testSchema, 'Test')
+  dtoGen.generateModelBySchema(refSchema, 'Ref')
+  dtoGen.getFile().saveSync()
+  const content = fs.readFileSync(`${__dirname}/dtoGenv2.ts`, 'utf8')
+  const generated = dtoGen.getGeneratedCode()
+  expect(content).toEqual(generated)
+  expect(generated).toMatchSnapshot()
+  fs.unlinkSync(`${__dirname}/dtoGenv2.ts`)
+})
