@@ -1,5 +1,5 @@
 import { Project, SourceFile, IndentationText, QuoteKind } from 'ts-morph'
-import { ParsedType, parseSchema } from '@zcong/mongoose-schema-parser/dist/v2'
+import { ParsedType, parseSchema } from '@zcong/mongoose-schema-parser'
 import * as mongoose from 'mongoose'
 import * as camelcase from 'camelcase'
 
