@@ -17,19 +17,19 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: |
-          if [ -f "yarn.lock" ]; then
-            yarn install
-          elif [ -f "pnpm-lock.yaml" ]; then
-            npm i -g pnpm
-            pnpm i
-          else
-            npm install
-          fi
+      # - run: |
+      #     if [ -f "yarn.lock" ]; then
+      #       yarn install
+      #     elif [ -f "pnpm-lock.yaml" ]; then
+      #       npm i -g pnpm
+      #       pnpm i
+      #     else
+      #       npm install
+      #     fi
       - run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-      - run: npm run release -- --yes --no-browse
+      - run: npx shipjs prepare --yes --no-browse
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_INCOMING_HOOK: ${{ secrets.SLACK_INCOMING_HOOK }}
