@@ -16,6 +16,7 @@ export class ModelGenerator {
   private file: SourceFile
   private useInterface: boolean
   private mongoseImports: Set<string> = new Set()
+  private modelRef: Set<string> = new Set()
   constructor(opts: ModelGeneratorInitOptions) {
     this.opts = opts
     this.useInterface = opts.useInterface
@@ -103,14 +104,14 @@ export class ModelGenerator {
           // handle ref type
           if (field.options && field.options.ref) {
             type = this.arrayWrapOr(
-              [
-                'string',
-                'Types.ObjectId',
-                `(${field.options.ref}Model & Document)`,
-              ],
+              ['string', 'Types.ObjectId', `${field.options.ref}Model`],
               isArray
             )
-            this.mongoseImports.add('Document')
+            // this.mongoseImports.add('Document')
+            // ignore self
+            if (field.options.ref !== name) {
+              this.modelRef.add(`${field.options.ref}Model`)
+            }
           } else {
             type = this.arrayWrapOr(['string', 'Types.ObjectId'], isArray)
           }
@@ -221,6 +222,14 @@ export class ModelGenerator {
         namedImports: [...this.mongoseImports].map((name) => ({ name })),
       })
       this.mongoseImports.clear()
+    }
+
+    if (this.modelRef.size > 0) {
+      this.file.addImportDeclaration({
+        moduleSpecifier: './',
+        namedImports: [...this.modelRef].map((name) => ({ name })),
+      })
+      this.modelRef.clear()
     }
   }
 }

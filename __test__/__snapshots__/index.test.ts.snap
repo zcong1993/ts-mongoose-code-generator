@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`v2 generic arrayStyle should work well 1`] = `
-"import { Types, Document } from 'mongoose';
+"import { Types } from 'mongoose';
+import { RefModel } from './';
 
 // This file is created by @zcong/ts-mongoose-code-generator
 export interface TestModel {
@@ -19,8 +20,8 @@ export interface TestModel {
   simpleArr2?: Array<string>;
   directNested?: TestDirectNestedSubModel;
   directNestedArr?: Array<TestDirectNestedArrSubModel>;
-  ref?: string | Types.ObjectId | (RefModel & Document);
-  refs?: Array<string> | Array<Types.ObjectId> | Array<(RefModel & Document)>;
+  ref?: string | Types.ObjectId | RefModel;
+  refs?: Array<string> | Array<Types.ObjectId> | Array<RefModel>;
   withTypeField?: Array<TestWithTypeFieldSubModel>;
   mixedArr?: Array<any>;
   mixed?: any;
@@ -75,7 +76,8 @@ export interface RefModel {
 `;
 
 exports[`v2 modelGenerator should work well 1`] = `
-"import { Types, Document } from 'mongoose';
+"import { Types } from 'mongoose';
+import { RefModel } from './';
 
 // This file is created by @zcong/ts-mongoose-code-generator
 export class TestModel {
@@ -93,8 +95,8 @@ export class TestModel {
   simpleArr2?: string[];
   directNested?: TestDirectNestedSubModel;
   directNestedArr?: TestDirectNestedArrSubModel[];
-  ref?: string | Types.ObjectId | (RefModel & Document);
-  refs?: string[] | Types.ObjectId[] | (RefModel & Document)[];
+  ref?: string | Types.ObjectId | RefModel;
+  refs?: string[] | Types.ObjectId[] | RefModel[];
   withTypeField?: TestWithTypeFieldSubModel[];
   mixedArr?: any[];
   mixed?: any;
@@ -149,7 +151,8 @@ export class RefModel {
 `;
 
 exports[`v2 modelGenerator stringEnumUseUnionType flag should work well 1`] = `
-"import { Types, Document } from 'mongoose';
+"import { Types } from 'mongoose';
+import { RefModel } from './';
 
 // This file is created by @zcong/ts-mongoose-code-generator
 export interface TestModel {
@@ -167,8 +170,8 @@ export interface TestModel {
   simpleArr2?: string[];
   directNested?: TestDirectNestedSubModel;
   directNestedArr?: TestDirectNestedArrSubModel[];
-  ref?: string | Types.ObjectId | (RefModel & Document);
-  refs?: string[] | Types.ObjectId[] | (RefModel & Document)[];
+  ref?: string | Types.ObjectId | RefModel;
+  refs?: string[] | Types.ObjectId[] | RefModel[];
   withTypeField?: TestWithTypeFieldSubModel[];
   mixedArr?: any[];
   mixed?: any;
@@ -223,7 +226,8 @@ export interface RefModel {
 `;
 
 exports[`v2 modelGenerator use interface should work well 1`] = `
-"import { Types, Document } from 'mongoose';
+"import { Types } from 'mongoose';
+import { RefModel } from './';
 
 // This file is created by @zcong/ts-mongoose-code-generator
 export interface TestModel {
@@ -241,8 +245,8 @@ export interface TestModel {
   simpleArr2?: string[];
   directNested?: TestDirectNestedSubModel;
   directNestedArr?: TestDirectNestedArrSubModel[];
-  ref?: string | Types.ObjectId | (RefModel & Document);
-  refs?: string[] | Types.ObjectId[] | (RefModel & Document)[];
+  ref?: string | Types.ObjectId | RefModel;
+  refs?: string[] | Types.ObjectId[] | RefModel[];
   withTypeField?: TestWithTypeFieldSubModel[];
   mixedArr?: any[];
   mixed?: any;
