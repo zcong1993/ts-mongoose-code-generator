@@ -1,3 +1,5 @@
+# [2.0.0](https://github.com/zcong1993/ts-mongoose-code-generator/compare/v2.0.0-beta.0...v2.0.0) (2021-09-16)
+
 # [2.0.0-beta.0](https://github.com/zcong1993/ts-mongoose-code-generator/compare/v1.3.1...v2.0.0-beta.0) (2021-09-01)
 
 ### Features
